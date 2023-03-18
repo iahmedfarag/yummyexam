@@ -237,7 +237,7 @@ function displaySingleMeal(meal) {
     // console.log(`${key}: ${value}`);
 
     if (key.startsWith("strMeasure")) {
-      if (value) {
+      if (value && value !== " ") {
         recipe.push(value);
       }
     }
