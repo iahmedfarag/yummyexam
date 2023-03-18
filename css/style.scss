@@ -359,7 +359,7 @@ aside {
     display: flex;
     align-items: center;
     justify-content: center;
-    form {
+    .form {
       width: 70%;
       display: flex;
       justify-content: center;
@@ -397,9 +397,13 @@ aside {
         transition: 0.2s;
         font-size: 14px;
         font-weight: bold;
+        cursor: not-allowed;
         &:hover {
           background-color: #ba1a08;
           color: $whiteColor;
+        }
+        &.active {
+          cursor: pointer;
         }
       }
     }

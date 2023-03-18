@@ -349,28 +349,28 @@ aside .control .mode label:active:after {
   align-items: center;
   justify-content: center;
 }
-.container .contact form {
+.container .contact .form {
   width: 70%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 20px;
 }
-.container .contact form .inp {
+.container .contact .form .inp {
   width: calc(50% - 10px);
 }
 @media (max-width: 576px) {
-  .container .contact form .inp {
+  .container .contact .form .inp {
     width: 100%;
   }
 }
-.container .contact form .inp input {
+.container .contact .form .inp input {
   width: 100%;
   padding: 12px 10px;
   background-color: #fff;
   color: #000;
 }
-.container .contact form .inp span {
+.container .contact .form .inp span {
   background-color: rgba(255, 0, 0, 0.3);
   width: 100%;
   display: block;
@@ -378,10 +378,10 @@ aside .control .mode label:active:after {
   line-height: 1.2;
   display: none;
 }
-.container .contact form .inp span.active {
+.container .contact .form .inp span.active {
   display: block;
 }
-.container .contact form button {
+.container .contact .form button {
   padding: 10px;
   color: #ba1a08;
   background-color: #000;
@@ -390,10 +390,14 @@ aside .control .mode label:active:after {
   transition: 0.2s;
   font-size: 14px;
   font-weight: bold;
+  cursor: not-allowed;
 }
-.container .contact form button:hover {
+.container .contact .form button:hover {
   background-color: #ba1a08;
   color: #fff;
+}
+.container .contact .form button.active {
+  cursor: pointer;
 }
 .container.light .contact form input {
   background-color: #000;

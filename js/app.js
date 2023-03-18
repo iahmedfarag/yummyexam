@@ -301,7 +301,7 @@ function displaySingleMeal(meal) {
       `;
 }
 
-// ! display contact //
+// ! display contact // ** regex
 function dispalyContact() {
   // * to avoid any search bug wa5d balk xd <3 2000 gneh lo sm7t :D :P
   loading.classList.remove("active");
@@ -310,7 +310,7 @@ function dispalyContact() {
 
   contentDiv.innerHTML = `
       <div class="contact">
-          <form action="">
+          <div class="form">
               <div class="inp">
                   <input type="text" placeholder="Enter Your Name" data-input="name"/>
               </div>
@@ -334,13 +334,23 @@ function dispalyContact() {
                   <input type="password" placeholder="Repassword" data-input="repass"/>
                   <span>Two passwords don't match</span>
               </div>
-              <button type="sumbit">Sumbit</button>
-          </form>
+              <button>Sumbit</button>
+          </div>
       </div>
       `;
 
   // ! regex // alo alo
-  let inps = Array.from(document.querySelectorAll(".contact form .inp input"));
+  let inps = Array.from(document.querySelectorAll(".contact .form .inp input"));
+  let btn = document.querySelector(".contact .form button");
+  let totalRegex = {
+    name: true,
+    email: false,
+    phone: false,
+    age: false,
+    pass: false,
+    repass: false,
+  };
+  console.log(totalRegex);
   // * shw error function
   function showError(input, res) {
     if (res) {
@@ -362,6 +372,11 @@ function dispalyContact() {
         let email = inp.value;
         let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         let result = email.match(regex);
+        if (result) {
+          totalRegex.email = true;
+        } else {
+          totalRegex.email = false;
+        }
         showError(inp, result);
       }
       // * phone regex
@@ -369,12 +384,22 @@ function dispalyContact() {
         let phone = inp.value;
         let regex = /^\d{10,11}$/;
         let result = phone.match(regex);
+        if (result) {
+          totalRegex.phone = true;
+        } else {
+          totalRegex.phone = false;
+        }
         showError(inp, result);
       }
       // * age regex
       else if (inp.dataset.input == "age") {
         let age = inp.value;
         let result = age >= 16;
+        if (result) {
+          totalRegex.age = true;
+        } else {
+          totalRegex.age = false;
+        }
         showError(inp, result);
       }
       // * pass regex
@@ -382,6 +407,11 @@ function dispalyContact() {
         let pass = inp.value;
         let regex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+){8,}$/;
         let result = pass.match(regex);
+        if (result) {
+          totalRegex.pass = true;
+        } else {
+          totalRegex.pass = false;
+        }
         showError(inp, result);
       }
       // * repass regex
@@ -393,7 +423,24 @@ function dispalyContact() {
             result = true ? inpt.value == inp.value : false;
           }
         });
+        if (result) {
+          totalRegex.repass = true;
+        } else {
+          totalRegex.repass = false;
+        }
         showError(inp, result);
+      }
+
+      if (
+        totalRegex.name &&
+        totalRegex.email ** totalRegex.phone &&
+        totalRegex.age &&
+        totalRegex.pass &&
+        totalRegex.repass
+      ) {
+        btn.classList.add("active");
+      } else {
+        btn.classList.remove("active");
       }
     });
   });
