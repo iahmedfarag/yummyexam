@@ -1,4 +1,4 @@
-// ! variables
+//* ! variables
 let containerDiv = document.querySelector(".container");
 let contentDiv = document.querySelector(".container .content");
 let aside = document.querySelector("aside");
@@ -6,7 +6,7 @@ let asideBtn = document.querySelector("aside .control .asideBtn");
 let asideLinks = Array.from(document.querySelectorAll("aside ul li"));
 let loading = document.querySelector(".loadingWrapper");
 
-// ! sidebar
+//* ! sidebar
 asideBtn.addEventListener("click", (e) => {
   // * toggle aside
   aside.classList.toggle("active");
@@ -31,9 +31,9 @@ document.getElementById("switch").addEventListener("click", (e) => {
   aside.classList.toggle("light");
   containerDiv.classList.toggle("light");
 });
-// ! mode
+//* ! mode
 
-// ! click on links
+//* ! click on links
 asideLinks.map((link) => {
   link.addEventListener("click", (e) => {
     aside.classList.remove("active");
@@ -44,7 +44,7 @@ asideLinks.map((link) => {
   });
 });
 
-// ! search handle
+//* ! search handle
 function searchHandle() {
   // * clear content div
   contentDiv.innerHTML = "";
@@ -85,7 +85,7 @@ function searchHandle() {
 
 // ***** async fucntions ********* //
 
-// ! get default meals function
+//* ! get default meals function
 async function getDefaultMeals() {
   let api = await fetch(
     "https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood"
@@ -105,7 +105,7 @@ async function getDefaultMeals() {
 // enter face
 getDefaultMeals();
 
-// ! get meals by search // made validation for search
+//* ! get meals by search // made validation for search
 async function getMealsBySearch(url, inp, searchValue) {
   let nameSearchInp = document.querySelector(".form .searchNameInp");
   let letterSearchInp = document.querySelector(".form .searchLetterInp");
@@ -130,7 +130,7 @@ async function getMealsBySearch(url, inp, searchValue) {
   }
 }
 
-// ! get categories //
+//* ! get categories //
 async function getCategories() {
   let api = await fetch(
     "https://www.themealdb.com/api/json/v1/1/categories.php"
@@ -139,7 +139,7 @@ async function getCategories() {
   displayCategories(res.categories);
 }
 
-// ! get areas //
+//* ! get areas //
 async function getAreas() {
   let api = await fetch(
     "https://www.themealdb.com/api/json/v1/1/list.php?a=list"
@@ -148,7 +148,7 @@ async function getAreas() {
   displayAreas(res.meals);
 }
 
-// ! get ingredients //
+//* ! get ingredients //
 async function getIngredients() {
   let api = await fetch(
     "https://www.themealdb.com/api/json/v1/1/list.php?i=list"
@@ -158,7 +158,7 @@ async function getIngredients() {
   displayIngredients(ingreds);
 }
 
-// ! get single meal
+//* ! get single meal
 async function getSingleMeal(id) {
   let api = await fetch(
     `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
@@ -167,7 +167,7 @@ async function getSingleMeal(id) {
   displaySingleMeal(res.meals[0]);
 }
 
-// ! get meals category
+//* ! get meals category
 async function getMealsCategory(cat) {
   let api = await fetch(
     `https://www.themealdb.com/api/json/v1/1/filter.php?c=${cat}`
@@ -177,7 +177,7 @@ async function getMealsCategory(cat) {
   displayDefaultMeals(newarr);
 }
 
-// ! get meals category
+//* ! get meals category
 async function getMealsArea(area) {
   console.log("area");
   let api = await fetch(
@@ -188,7 +188,7 @@ async function getMealsArea(area) {
   displayDefaultMeals(newarr);
 }
 
-// ! get meals from main ingredients //
+//* ! get meals from main ingredients //
 async function getMealsIngredients(ing) {
   console.log(ing);
   let api = await fetch(
@@ -203,7 +203,7 @@ async function getMealsIngredients(ing) {
 
 // ***** display fucntions ********* //
 
-// ! display default meals function // show meals //
+//* ! display default meals function // show meals //
 function displayDefaultMeals(meals) {
   loading.classList.add("active");
   let box = "";
@@ -223,7 +223,7 @@ function displayDefaultMeals(meals) {
   contentDiv.innerHTML = box;
 }
 
-// ! display single meal
+//* ! display single meal
 // todo // recipe
 function displaySingleMeal(meal) {
   loading.classList.add("active");
@@ -301,7 +301,7 @@ function displaySingleMeal(meal) {
       `;
 }
 
-// ! display contact // ** regex
+//* ! display contact // ** regex
 function dispalyContact() {
   // * to avoid any search bug wa5d balk xd <3 2000 gneh lo sm7t :D :P
   loading.classList.remove("active");
@@ -313,6 +313,7 @@ function dispalyContact() {
           <div class="form">
               <div class="inp">
                   <input type="text" placeholder="Enter Your Name" data-input="name"/>
+                  <span>name cannot bet empty & must be</span>
               </div>
               <div class="inp">
                   <input type="email" placeholder="Enter Your Email" data-input="email" />
@@ -343,14 +344,13 @@ function dispalyContact() {
   let inps = Array.from(document.querySelectorAll(".contact .form .inp input"));
   let btn = document.querySelector(".contact .form button");
   let totalRegex = {
-    name: true,
+    name: false,
     email: false,
     phone: false,
     age: false,
     pass: false,
     repass: false,
   };
-  console.log(totalRegex);
   // * shw error function
   function showError(input, res) {
     if (res) {
@@ -365,7 +365,16 @@ function dispalyContact() {
     inp.addEventListener("input", (e) => {
       // * name regex
       if (inp.dataset.input == "name") {
-        console.log("name");
+        let name = inp.value;
+        let regex = /^[a-z]{1,}/;
+        let result = name.match(regex);
+        if (result) {
+          totalRegex.name = true;
+        } else {
+          totalRegex.name = false;
+        }
+        console.log(result);
+        showError(inp, result);
       }
       // * email regex
       else if (inp.dataset.input == "email") {
@@ -433,7 +442,8 @@ function dispalyContact() {
 
       if (
         totalRegex.name &&
-        totalRegex.email ** totalRegex.phone &&
+        totalRegex.email &&
+        totalRegex.phone &&
         totalRegex.age &&
         totalRegex.pass &&
         totalRegex.repass
@@ -447,7 +457,7 @@ function dispalyContact() {
 }
 // dispalyContact();
 
-// ! dispaly ingrenients //
+//* ! dispaly ingrenients //
 function displayIngredients(ingreds) {
   loading.classList.add("active");
   containerDiv.innerHTML = "";
@@ -474,7 +484,7 @@ function displayIngredients(ingreds) {
   contentDiv.innerHTML = box;
 }
 
-// ! display areas //
+//* ! display areas //
 function displayAreas(areas) {
   containerDiv.innerHTML = "";
   containerDiv.appendChild(contentDiv);
@@ -494,7 +504,7 @@ function displayAreas(areas) {
   contentDiv.innerHTML = box;
 }
 
-// ! display categories //
+//* ! display categories //
 function displayCategories(cats) {
   containerDiv.innerHTML = "";
   containerDiv.appendChild(contentDiv);
