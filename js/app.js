@@ -209,7 +209,7 @@ function displayDefaultMeals(meals) {
   let box = "";
   meals.map((meal) => {
     box += `
-          <div class="box" data-id="${meal.idMeal}" onclick=(getSingleMeal(${meal.idMeal}))>
+          <div class="box noSelect" data-id="${meal.idMeal}" onclick=(getSingleMeal(${meal.idMeal}))>
             <img src="${meal.strMealThumb}"/>
             <div class="overlay">
               <h2 class="title">${meal.strMeal}</h2>
@@ -313,7 +313,7 @@ function dispalyContact() {
           <div class="form">
               <div class="inp">
                   <input type="text" placeholder="Enter Your Name" data-input="name"/>
-                  <span>name cannot bet empty & must be</span>
+                  <span>Name input not allowed to be empty</span>
               </div>
               <div class="inp">
                   <input type="email" placeholder="Enter Your Email" data-input="email" />
@@ -439,7 +439,6 @@ function dispalyContact() {
         }
         showError(inp, result);
       }
-
       if (
         totalRegex.name &&
         totalRegex.email &&
@@ -471,7 +470,7 @@ function displayIngredients(ingreds) {
 
     let ingredName = ingred.strIngredient.replace(/\s+/g, "_");
     box += `
-        <div class="box ingredient" data-id="${ingred.ingredidIngredient}" onclick=(getMealsIngredients("${ingredName}"))>
+        <div class="box ingredient noSelect" data-id="${ingred.ingredidIngredient}" onclick=(getMealsIngredients("${ingredName}"))>
         <i class="fa-solid fa-drumstick-bite fa-4x"></i>
         <h3 class="title">${ingred.strIngredient}</h3>
         <p>${desc}</p>
@@ -492,7 +491,7 @@ function displayAreas(areas) {
   let box = "";
   areas.map((area) => {
     box += `
-      <div class="box area" onclick=(getMealsArea("${area.strArea}"))>
+      <div class="box area noSelect" onclick=(getMealsArea("${area.strArea}"))>
       <i class="fa-solid fa-house-laptop fa-4x"></i>
       <h3 class="title">${area.strArea}</h3>
     </div>
@@ -518,7 +517,7 @@ function displayCategories(cats) {
         ? cat.strCategoryDescription.slice(0, 135)
         : cat.strCategoryDescription;
     box += `
-          <div class="box" data-id="${cat.idCategory}" onclick=(getMealsCategory('${cat.strCategory}'))>
+          <div class="box noSelect" data-id="${cat.idCategory}" onclick=(getMealsCategory('${cat.strCategory}'))>
           <img src="${cat.strCategoryThumb}"/>
           <div class="overlay category">
             <h2 class="title">${cat.strCategory}</h2>
